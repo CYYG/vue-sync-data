@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
     <h1>Une belle page Vue</h1>
-    <h2>{{ msg }}</h2>
-    <input v-model="msg" @input="storeOnLocal" placeholder="modifiez-moi">
+    <h2>Message synchronisé: {{ msg }}</h2>
+    <input v-model="msg" @input="storeMsgOnLocal" placeholder="Tapez le message à synchroniser">
     <section>
       <h3>Synchroniser les autres pages</h3>
-      <input type="radio" v-model="sync" value="1">Oui
+      <input type="radio" v-model="sync" @change="storeMsgOnLocal" value="1">Oui
       <input type="radio" v-model="sync" value="0">Non
     </section>
   </div>
@@ -16,25 +16,25 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: this.$ls.get('msg'),
+      msg: this.$ls.get('sync_msg'),
       sync: "1"
     }
   },
   methods: {
-    storeOnLocal() { 
+    storeMsgOnLocal() { 
       if(this.sync === "1") {
-        this.$ls.set('msg', this.msg);
+        this.$ls.set('sync_msg', this.msg);
       }
     }
   },
   mounted() {
-    this.$ls.set('msg', 'boo');
+    this.$ls.set('sync_msg', 'Default message');
     
     let callback = (val, oldVal, uri) => {
-      this.msg = this.$ls.get('msg')
+      this.msg = this.$ls.get('sync_msg')
     } 
     
-    this.$ls.on('msg', callback)
+    this.$ls.on('sync_msg', callback)
   }
 }
 </script>

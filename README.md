@@ -1,6 +1,6 @@
-# Synchronised data
+# Vue.js Synchronised data
 
-> A Vue.js app with synchronised data
+> A Vue.js app with synchronised data between pages
 
 ## Prerequisit
 You need to install [NPM](https://www.npmjs.com/get-npm)

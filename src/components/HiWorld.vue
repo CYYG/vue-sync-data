@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <h1>Une autre belle page Vue</h1>
-    <h2>{{ message }}</h2>
-    <input v-model="message" @input="storeOnLocal" placeholder="modifiez-moi">
+    <h2>Message synchronisé: {{ message }}</h2>
+    <input v-model="message" @input="storeMsgOnLocal" placeholder="Tapez le message à synchroniser">
   </div>
 </template>
 
@@ -11,22 +11,22 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      message: this.$ls.get('msg')
+      message: this.$ls.get('sync_msg')
     }
   },
   methods: {
-    storeOnLocal() {
-      this.$ls.set('msg', this.message);
+    storeMsgOnLocal() {
+      this.$ls.set('sync_msg', this.message);
     }
   },
   mounted() {
-    this.$ls.set('msg', 'boo');
+    this.$ls.set('sync_msg', 'Default message');
     
     let callback = (val, oldVal, uri) => {
-      this.message = this.$ls.get('msg')
+      this.message = this.$ls.get('sync_msg')
     } 
     
-    this.$ls.on('msg', callback)
+    this.$ls.on('sync_msg', callback)
   }
 }
 </script>
